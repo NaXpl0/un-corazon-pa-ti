@@ -43,7 +43,7 @@
       to { opacity: 0.3; }
     }
 
-    /* --- Escena final con cohete y estrellas --- */
+    /* --- Escena final --- */
     #escenaFinal {
       position: absolute;
       top: 0;
@@ -53,13 +53,12 @@
       background: black;
       display: none;
       justify-content: center;
-      align-items: flex-end;
-      overflow: hidden;
+      align-items: center;
       flex-direction: column;
-      padding-bottom: 50px;
+      overflow: hidden;
     }
 
-    /* Fondo estrellado */
+    /* Estrellas */
     .estrella {
       position: absolute;
       width: 2px;
@@ -75,56 +74,66 @@
       to { opacity: 1; }
     }
 
+    /* Cohete centrado */
     .cohete {
       font-size: 60px;
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
       animation: despegar 4s linear forwards;
       z-index: 2;
     }
 
     @keyframes despegar {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-120vh); }
+      0% { transform: translate(-50%, 0); }
+      100% { transform: translate(-50%, -120vh); }
     }
 
-    /* Humo en ondas */
+    /* Humo justo debajo */
     .humo {
       position: absolute;
-      bottom: 50px;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 30px;
       opacity: 0.7;
       animation: humoSube 5s ease-in-out infinite;
     }
 
     @keyframes humoSube {
-      0%   { transform: translateY(0) translateX(0); opacity: 0.7; }
-      50%  { transform: translateY(-80px) translateX(20px); opacity: 0.4; }
-      100% { transform: translateY(-160px) translateX(-20px); opacity: 0; }
+      0%   { transform: translate(-50%, 0) scale(1); opacity: 0.7; }
+      50%  { transform: translate(-50%, -80px) scale(1.2); opacity: 0.4; }
+      100% { transform: translate(-50%, -160px) scale(1.4); opacity: 0; }
     }
 
-    /* Mensaje final con efecto neón y latido */
+    /* Mensaje final */
     .mensajeFinal {
-      font-size: 26px;
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 28px;
       color: #ff80ff;
-      opacity: 0;
       text-align: center;
-      animation: aparecerMsg 2s ease-in-out forwards, latido 1.5s infinite;
-      animation-delay: 6s, 8s; /* primero aparece, luego empieza a latir */
-      max-width: 90%;
-      z-index: 3;
+      opacity: 0;
       text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff33cc, 0 0 20px #ff66ff;
+      animation: aparecerMsg 2s ease-in-out forwards, latido 1.5s infinite;
+      animation-delay: 5s, 7s; /* aparece y luego late */
+      z-index: 3;
     }
 
     @keyframes aparecerMsg {
-      0% { opacity: 0; transform: translateY(20px) scale(0.9); }
-      100% { opacity: 1; transform: translateY(0) scale(1); }
+      0% { opacity: 0; transform: translate(-50%, 20px) scale(0.9); }
+      100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
     }
 
     @keyframes latido {
-      0%   { transform: scale(1); text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff33cc, 0 0 30px #ff66ff; }
-      25%  { transform: scale(1.1); text-shadow: 0 0 10px #ff33cc, 0 0 20px #ff66ff, 0 0 40px #ff99ff; }
-      50%  { transform: scale(1); text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff33cc, 0 0 30px #ff66ff; }
-      75%  { transform: scale(1.1); text-shadow: 0 0 10px #ff33cc, 0 0 20px #ff66ff, 0 0 40px #ff99ff; }
-      100% { transform: scale(1); text-shadow: 0 0 5px #ff00ff, 0 0 15px #ff33cc, 0 0 30px #ff66ff; }
+      0%   { transform: translateX(-50%) scale(1); }
+      25%  { transform: translateX(-50%) scale(1.1); }
+      50%  { transform: translateX(-50%) scale(1); }
+      75%  { transform: translateX(-50%) scale(1.1); }
+      100% { transform: translateX(-50%) scale(1); }
     }
   </style>
 </head>
@@ -135,16 +144,9 @@
 
   <!-- Escena final -->
   <div id="escenaFinal">
-    <!-- Estrellas -->
     <div id="cielo"></div>
-    <!-- Cohete -->
     <div class="cohete">🚀</div>
-    <!-- Humo -->
     <div class="humo">💨</div>
-    <div class="humo" style="left: 40%; animation-delay: 1s;">💨</div>
-    <div class="humo" style="left: 60%; animation-delay: 2s;">💨</div>
-    <div class="humo" style="left: 50%; animation-delay: 3s;">💨</div>
-    <!-- Mensaje final -->
     <div class="mensajeFinal">Esto no lo hace cualquiera mi amor, espero que te guste 💕</div>
   </div>
 
@@ -238,7 +240,7 @@
       requestAnimationFrame(animate);
     }
 
-    // generar estrellas aleatorias
+    // estrellas
     function generarEstrellas(num) {
       for (let i = 0; i < num; i++) {
         let estrella = document.createElement("div");
